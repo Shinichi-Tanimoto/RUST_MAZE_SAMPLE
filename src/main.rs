@@ -45,14 +45,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>>  {
 fn normal_bfs(maze: &Vec<Vec<char>>, h: i32, w: i32, start_pos: (i32, i32), goal_pos: (i32, i32)) -> (i32, u32) {
     // 初期化
     let mut queue: VecDeque<(i32, i32)> = VecDeque::new();
-    let mut dist_vec: Vec<Vec<i32>> = Vec::with_capacity(100);
-    for row in maze.iter(){
-        let mut dist_row_vec: Vec<i32> = Vec::with_capacity(100);
-        for _ in 0..row.len() {
-            dist_row_vec.push(-1);
-        }
-        dist_vec.push(dist_row_vec);
-    }
+    let mut dist_vec: Vec<Vec<i32>> = vec![vec![-1; 100]; 100];
     let directions: [(i32, i32); 4]  = [(1, 0), (-1, 0), (0, 1), (0, -1)];
 
     queue.push_back(start_pos);
@@ -83,17 +76,9 @@ fn normal_bfs(maze: &Vec<Vec<char>>, h: i32, w: i32, start_pos: (i32, i32), goal
 }
 
 fn a_star_bfs(maze: &Vec<Vec<char>>, h: i32, w: i32, start_pos: (i32, i32), goal_pos: (i32, i32)) -> (i32, u32) {
-
     // 初期化
     let mut heap = BinaryHeap::new();
-    let mut dist_vec: Vec<Vec<i32>> = Vec::with_capacity(100);
-    for row in maze.iter(){
-        let mut dist_row_vec: Vec<i32> = Vec::with_capacity(100);
-        for _ in 0..row.len() {
-            dist_row_vec.push(-1);
-        }
-        dist_vec.push(dist_row_vec);
-    }
+    let mut dist_vec: Vec<Vec<i32>> = vec![vec![-1; 100]; 100];
     let directions: [(i32, i32); 4]  = [(1, 0), (-1, 0), (0, 1), (0, -1)];
 
     heap.push((-heuristic_cost(&start_pos, &goal_pos), start_pos));
